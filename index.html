@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lord Ganesha Photo Gallery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body
+    class="bg-gray-100 min-h-screen flex flex-col items-center p-6 space-y-6"
+  >
+    <div class="text-center">
+      <h1 class="text-4xl font-bold text-orange-600 mb-4">
+        🪔 Lord Ganesha Photo Gallery 🕉️
+      </h1>
+      <p class="text-gray-700 mb-6">
+        A divine collection of Shri Ganpati Bappa’s blessings 🙏
+      </p>
+
+      <input
+        id="searchInput"
+        type="text"
+        placeholder="Search Ganpati..."
+        class="px-4 py-2 border rounded-lg shadow w-72 focus:outline-none focus:ring-2 focus:ring-orange-400"
+      />
+    </div>
+
+    <div
+      id="gallery"
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 w-full max-w-6xl"
+    ></div>
+
+    <div
+      id="lightbox"
+      class="hidden fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50"
+    >
+      <img
+        id="lightboxImg"
+        src=""
+        alt="Large View"
+        class="max-h-[90%] max-w-[90%] rounded-lg shadow-lg"
+      />
+    </div>
+
+    <script>
+      const images = [
+        {
+          name: "bappa 1",
+          src: "https://img.freepik.com/premium-photo/cute-lord-ganesha-hindu-god-ganpati-ganesh-chaturthi-festival-aigenerated_11410-1129.jpg",
+        },
+        {
+          name: "bappa 2",
+          src: "https://i.pinimg.com/736x/74/3a/0e/743a0eef29c5b6c0397c6ff181df5a0d.jpg",
+        },
+        {
+          name: "bappa 3",
+          src: "https://w0.peakpx.com/wallpaper/576/635/HD-wallpaper-cute-ganesha-3d-effect-cute-ganesha-bhakti-thumbnail.jpg",
+        },
+        {
+          name: "bappa 4",
+          src: "https://m.media-amazon.com/images/I/51o7GhIWoJL._AC_SY350_QL15_.jpg",
+        },
+        {
+          name: "bappa 5",
+          src: "https://images.news9live.com/wp-content/uploads/2024/08/ae822b1b4a282546510f907dc0c73af5-1.jpg",
+        },
+        {
+          name: "bappa 6",
+          src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZvzrBsU-qAAmTFqaZdsRQ_TW8fXEd0631-g5Qzxd0Qo1OEw49BRJkWX-yno36s3E8x-g&usqp=CAU",
+        },
+        {
+          name: "bappa 7",
+          src: "https://www.fnp.com//images/pr/l/v20241014144329/baby-ganesha-idol_1.jpg",
+        },
+        {
+          name: "bappa 8",
+          src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmpKwlQPhmaqG0WXxjLP_DPnpmfnQxi6E_PA&s",
+        },
+        {
+          name: "bappa 9",
+          src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrJJsDpgG6oXcfy76t5l_D0eQURDIQ8E7TmbikqV90AFuMhoYUnAEWlvTOM2l_JqJcHUo&usqp=CAU",
+        },
+        {
+          name: "bappa 10",
+          src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrJ4i88ewcrvOvfWXYujk4Opovtkk3OMXknVyO1K00T0vhGDgNy0if_LjkdotjYMZbf2w&usqp=CAU",
+        },
+        {
+          name: "bappa 11",
+          src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjgiKkFpMQmJEG-XmA8Dc0QNuJdbdlChf3E2JPNmATeMGWGg6DbPMbyG_B80xP9dHwbsg&usqp=CAU",
+        },
+        {
+          name: "bappa 12",
+          src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrJJsDpgG6oXcfy76t5l_D0eQURDIQ8E7TmbikqV90AFuMhoYUnAEWlvTOM2l_JqJcHUo&usqp=CAU",
+        },
+        {
+          name: "bappa 13",
+          src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTP7-zAjpZiHxYI5tjGPtonpYbq2lJJfbLMMQ&s",
+        },
+        {
+          name: "bappa 14 ",
+          src: "https://sellet.in/wp-content/uploads/2024/08/Photoroom-20240831_163149_13-600x450.jpg",
+        },
+        {
+          name: "bappa 15",
+          src: "https://i.ebayimg.com/images/g/GxoAAOSwsS1oB4jI/s-l400.jpg",
+        },
+        {
+          name: "bappa 16",
+          src: "https://i.ebayimg.com/images/g/1N4AAOSw-0xYgLMU/s-l400.jpg",
+        },
+        {
+          name: "bappa 17",
+          src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBiHzrxbEhPxbYwy-FQdTQAUwNvfBUxLQdeg&s",
+        },
+        {
+          name: "bappa 18",
+          src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQApmmkC0sSkg_prB--kt-YYX8c-5dMLzdDfJAAncIFYheDr823K6L60LrbhqKbUp0iD7M&usqp=CAU",
+        },
+        {
+          name: "bappa 19",
+          src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRthjhM0Ive6e8l2Mb3pGbaMWF6Vb2GarI9N2hv3ZsLhP6KW6M1brZK45ucYQezps5g-Iw&usqp=CAU",
+        },
+        {
+          name: "bappa 20",
+          src: "https://i.pinimg.com/236x/a2/74/7c/a2747c669f2ee46846633113798b2bd3.jpg",
+        },
+        {
+          name: "bappa 21",
+          src: "https://w0.peakpx.com/wallpaper/542/541/HD-wallpaper-god-s-lord-ganesha-animation-god-ganpati-bappa.jpg",
+        },
+      ];
+
+      const gallery = document.getElementById("gallery");
+      const searchInput = document.getElementById("searchInput");
+      const lightbox = document.getElementById("lightbox");
+      const lightboxImg = document.getElementById("lightboxImg");
+
+      function displayImages(filter = "") {
+        gallery.innerHTML = "";
+        images
+          .filter((img) =>
+            img.name.toLowerCase().includes(filter.toLowerCase())
+          )
+          .forEach((img) => {
+            const imgEl = document.createElement("img");
+            imgEl.src = img.src;
+            imgEl.className =
+              "aspect-square w-full rounded-lg shadow-lg cursor-pointer hover:scale-105 transition-transform";
+
+            imgEl.addEventListener("click", () => {
+              lightbox.classList.remove("hidden");
+              lightboxImg.src = img.src;
+            });
+
+            gallery.appendChild(imgEl);
+          });
+      }
+
+      lightbox.addEventListener("click", () => {
+        lightbox.classList.add("hidden");
+      });
+
+      searchInput.addEventListener("input", (e) => {
+        displayImages(e.target.value);
+      });
+
+      displayImages();
+
+      
+      
+    </script>
+  </body>
+</html>
